@@ -28,8 +28,10 @@
             dataType: 'json',
             success: $.wpcf7AjaxSuccess,
             error: function(xhr, status, error, $form) {
-                var e = $('<div class="ajax-error"></div>').text(error.message);
-                $form.after(e);
+                var result = JSON.parse(xhr.responseText);
+                // var e = $('<div class="ajax-error"></div>').text(result.errMsg);
+                // $form.after(e);
+                alert(result.errMsg);
             }
         });
 
@@ -80,6 +82,9 @@
     $.wpcf7AjaxSuccess = function(data, status, xhr, $form) {
         if (! $.isPlainObject(data) || $.isEmptyObject(data))
             return;
+
+        alert("成功参加");
+        return;
 
         var $responseOutput = $form.find('div.wpcf7-response-output');
 
@@ -142,6 +147,8 @@
 
         $responseOutput.append(data.message).slideDown('fast');
         $responseOutput.attr('role', 'alert');
+
+        
 
         $.wpcf7UpdateScreenReaderResponse($form, data);
     };
